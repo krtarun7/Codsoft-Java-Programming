@@ -1,52 +1,62 @@
-import java.util.Scanner;
-import java.util.Random;
+import java.util.*;
+public class Game{
+	public static void main(String args[])
+	{
+		generateRandom();
+	}
+	public static void generateRandom(){
+		Random rand=new Random();
+		int randomNum=rand.nextInt(101);
+		guess(randomNum);
+	}
+	public static void guess(int randomNum){
+		Scanner in =new Scanner(System.in);
+		System.out.println("");
+		System.out.println("Number Guessing Game");
+		System.out.println("Guess a number between 0-100 : ");
+		int guess=in.nextInt();
+		System.out.println("");
 
-public class NumberGame {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-        
-        int minRange = 1;
-        int maxRange = 100;
-        int maxAttempts = 10;
-        int rounds = 0;
-        int totalAttempts = 0;
+		while(guess<0 || guess>100){
+			System.out.println("Guess a number between 0-100 : ");
+			guess=in.nextInt();
+			System.out.println("");
+		}
+		int tries=0;
+		while (guess!=randomNum){
+			tries++;
+			System.out.println("Wrong Guess!");
+			System.out.println("Guess Again : ");
+			guess=in.nextInt();
+			System.out.println("");
 
-        while (true) {
-            rounds++;
-            int targetNumber = random.nextInt(maxRange - minRange + 1) + minRange;
-            System.out.println("Round " + rounds);
-            System.out.println("Guess a number between " + minRange + " and " + maxRange);
+			while(guess<0 || guess>100){
+				System.out.println("Guess a number between 0-100 : ");
+				guess=in.nextInt();
+				System.out.println("");
+			}
+		if(guess>randomNum){
+			System.out.println("Nope! The Guessing Number is Lower");
+		}
+		else if(guess<randomNum){
+			System.out.println("Nope! The Guessing Number is Higher");
+		}
+		}
 
-            int attempts = 0;
-            while (attempts < maxAttempts) {
-                System.out.print("Enter your guess: ");
-                int userGuess = scanner.nextInt();
-                attempts++;
+		System.out.println("Correct Answer. You Won!");
+		System.out.println("Wrong Tries:" + tries);
+		System.out.println("");
 
-                if (userGuess == targetNumber) {
-                    System.out.println("Congratulations! You guessed the number " + targetNumber + " in " + attempts + " attempts.");
-                    totalAttempts += attempts;
-                    break;
-                } else if (userGuess < targetNumber) {
-                    System.out.println("Too low! Try again.");
-                } else {
-                    System.out.println("Too high! Try again.");
-                }
-            }
+		System.out.println("Press 1 to play again.");
+		System.out.println("Press 0 to exit.");
+		int choice=in.nextInt();
 
-            if (attempts >= maxAttempts) {
-                System.out.println("Sorry, you've reached the maximum number of attempts. The correct number was " + targetNumber + ".");
-            }
-
-            System.out.print("Do you want to play again? (yes/no): ");
-            String playAgain = scanner.next().toLowerCase();
-            if (!playAgain.equals("yes")) {
-                break;
-            }
-        }
-
-        double averageAttempts = (double) totalAttempts / rounds;
-        System.out.println("Thanks for playing! Your average attempts per round: " + String.format("%.2f", averageAttempts));
-    }
+		if(choice==1){
+			generateRandom();
+		}
+		else
+		{
+			return;
+		}
+	}
 }
